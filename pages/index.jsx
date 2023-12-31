@@ -1,8 +1,25 @@
+import Message from '@/components/message';
 import TodoAdd from '@/components/todoAdd';
+import TodoView from '@/components/todoView';
 import { TodoItemsContext } from '@/context/todo-items';
+import { useState } from "react";
 import Head from 'next/head';
 
 export default function Home() {
+  const [todoItems, setTodoItems] = useState([]);
+
+  const addNewItem = (noteItem, dateItem) => {
+    const newTodo = [
+      ...todoItems,
+      { note: noteItem, date: dateItem }
+    ];
+    setTodoItems(newTodo);
+  };
+
+  const deleteItem = (todoItemName) => {
+    const deleteTodo = todoItems.filter((item) => item.note !== todoItemName);
+    setTodoItems(deleteTodo);
+  };
 
   return (
     <>
@@ -14,8 +31,14 @@ export default function Home() {
       </Head>
       <main className='container'>
         <h1 className='mt-5 text-center'>TODO App with Context API</h1>
-        <TodoItemsContext.Provider value={[]}>
+        <TodoItemsContext.Provider value={{
+            todoItems, 
+            addNewItem,
+            deleteItem
+          }}>
           <TodoAdd />
+          <Message />
+          <TodoView />
         </TodoItemsContext.Provider>
       </main>
     </>
