@@ -11,7 +11,7 @@ export default function TodoView() {
           <div className="row mb-3" key={id}>
             <div className="col-6">{item.note}</div>
             <div className="col-4">{item.date}</div>
-            <div className="col-2">
+            <div className="col-2 text-end">
               <button 
                 type="button" 
                 onClick={() => deleteItem(item.note)} 
